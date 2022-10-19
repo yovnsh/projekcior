@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "1dMh4bTb9FYtK+/6eFUpZaXgsDX2eTXK7Y1P6DZtMYgCStB56qF5PGL+iIzAHyOALQ8tNgyShQfVhN9vS0c+sg==",
+=======
+  "dgSpecHash": "jfCp5QRnc+2bQMs3OS8jjI0NK0OJuvSV3dXAoQV7hrQ2t2oFjg18XwU/rGe0C9QnizlQfJ5VSJNgldXEdngLdA==",
+>>>>>>> 1cee3b5 (tak go nazwe)
   "success": true,
   "projectFilePath": "D:\\projekt\\projekcior\\projekcior.csproj",
   "expectedPackageFiles": [],
