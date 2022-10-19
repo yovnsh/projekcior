@@ -1,0 +1,15 @@
+D:\projekt\projekcior\bin\Debug\net6.0\projekcior.exe
+D:\projekt\projekcior\bin\Debug\net6.0\projekcior.deps.json
+D:\projekt\projekcior\bin\Debug\net6.0\projekcior.runtimeconfig.json
+D:\projekt\projekcior\bin\Debug\net6.0\projekcior.dll
+D:\projekt\projekcior\bin\Debug\net6.0\projekcior.pdb
+D:\projekt\projekcior\obj\Debug\net6.0\projekcior.csproj.AssemblyReference.cache
+D:\projekt\projekcior\obj\Debug\net6.0\projekcior.GeneratedMSBuildEditorConfig.editorconfig
+D:\projekt\projekcior\obj\Debug\net6.0\projekcior.AssemblyInfoInputs.cache
+D:\projekt\projekcior\obj\Debug\net6.0\projekcior.AssemblyInfo.cs
+D:\projekt\projekcior\obj\Debug\net6.0\projekcior.csproj.CoreCompileInputs.cache
+D:\projekt\projekcior\obj\Debug\net6.0\projekcior.dll
+D:\projekt\projekcior\obj\Debug\net6.0\refint\projekcior.dll
+D:\projekt\projekcior\obj\Debug\net6.0\projekcior.pdb
+D:\projekt\projekcior\obj\Debug\net6.0\projekcior.genruntimeconfig.cache
+D:\projekt\projekcior\obj\Debug\net6.0\ref\projekcior.dll
