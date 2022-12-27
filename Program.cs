@@ -1,10 +1,13 @@
-﻿using Projekcior.Commands;
+﻿using Projekcior;
+using Projekcior.Commands;
 
 namespace Projekcior {
     class Program {
 
         public static bool ExitRequest = false;
         public static List<CommandGroup> Commands = new List<CommandGroup>();
+        private static Hipokamp Pamiec = new Hipokamp();
+
         public static void Main() {
             // init
             RegisterCommands();
