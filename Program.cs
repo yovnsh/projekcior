@@ -9,10 +9,7 @@ namespace Projekcior {
         public static Hipokamp Pamiec = new Hipokamp();
 
         public static void Main() {
-            // init
             RegisterCommands();
-
-            Console.WriteLine("czeć");
 
             while(!ExitRequest) {
                 try {
@@ -34,7 +31,10 @@ namespace Projekcior {
         }
 
         public static void ReadInstruction() {
-            Console.Write("> ");
+            Console.Clear();
+            PrintData();
+            Console.Write("\n> ");
+
             string? instruction = Console.ReadLine();
             if(instruction == null)
                 throw new EndOfStreamException();
@@ -71,34 +71,52 @@ namespace Projekcior {
         public static Argument ReadArgument1(string argument_name) {
             if(RegisterArgument.Contains(argument_name))
             {
-                Console.WriteLine("rejestr " + argument_name);
                 return new RegisterArgument(argument_name);
             }
             else if (HalfRegisterArgument.Contains(argument_name))
             {
-                Console.WriteLine("pół rejestr " + argument_name);
                 return new HalfRegisterArgument(argument_name);
             }
             else if(SegmentArgument.Contains(argument_name))
             {
-                Console.WriteLine("segment " + argument_name);
                 return new SegmentArgument(argument_name);
             }
             else if(PointerArgument.Contains(argument_name))
             {
-                Console.WriteLine("wskaźnik " + argument_name);
                 return new PointerArgument(argument_name);
             }
             else if(FlagArgument.Contains(argument_name))
             {
-                Console.WriteLine("flaga " + argument_name);
                 return new FlagArgument(argument_name);
             }
             else
             {
-                Console.WriteLine("liczba " + argument_name);
                 return new NumericConstant(argument_name);
             }
+        }
+
+        public static void PrintData()
+        {
+            Console.WriteLine($" ___________________________________ ____________________________________________ ___________________________________");
+            Console.WriteLine($"|                                   |                                            |                                   |");
+            Console.WriteLine($"|              Rejestry             |                    Flagi                   |              Segmenty             |");
+            Console.WriteLine($"|___________________________________|____________________________________________|___________________________________|");
+            Console.WriteLine($"|        |        |        |        |    |    |    |    |    |    |    |    |    |        |        |        |        |");
+
+            Console.Write($"| {"AX", 6} | {"BX", 6} | {"CX", 6} | {"DX", 6} |");
+            Console.Write($" OF | DF | IF | TF | SF | ZF | AF | PF | CF |");
+            Console.Write($" {"CS", 6} | {"DS", 6} | {"ES", 6} | {"SS", 6} |\n");
+
+            // rejestry
+            Console.Write($"| {Program.Pamiec.Rejestry.AX, 6} | {Program.Pamiec.Rejestry.BX, 6} | {Program.Pamiec.Rejestry.CX, 6} | {Program.Pamiec.Rejestry.DX, 6} |");
+            // flagi
+            Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi["OF"]), 2} | {Convert.ToInt16(Program.Pamiec.Flagi["DF"]),2} | {Convert.ToInt16(Program.Pamiec.Flagi["IF"]),2} | {Convert.ToInt16(Program.Pamiec.Flagi["TF"]),2} |");
+            Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi["SF"]),2} | {Convert.ToInt16(Program.Pamiec.Flagi["ZF"]),2} | {Convert.ToInt16(Program.Pamiec.Flagi["AF"]),2} | {Convert.ToInt16(Program.Pamiec.Flagi["PF"]),2} |");
+            Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi["CF"]),2} |");
+            // segmenty
+            Console.Write($" {Program.Pamiec.Segmenty["CS"],6} | {Program.Pamiec.Segmenty["DS"],6} | {Program.Pamiec.Segmenty["ES"],6} | {Program.Pamiec.Segmenty["SS"],6} |\n");
+
+            Console.WriteLine($"|________|________|________|________|____|____|____|____|____|____|____|____|____|________|________|________|________|");
         }
 
         public static void RegisterCommands() {
