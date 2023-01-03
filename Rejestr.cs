@@ -11,11 +11,17 @@ namespace Projekcior.Pamiec {
             return Convert.ToSByte(rejestr & 0x00ff);
         }
         private static void SetHighPart(ref Int16 rejestr, sbyte value) {
-            rejestr |= Convert.ToInt16(Convert.ToInt16(value) << 8);
+            rejestr &= (Int16)0x00ffU;
+            rejestr |= (Int16)(Convert.ToInt16(value) << 8);
         }
 
         private static void SetLowPart(ref Int16 rejestr, sbyte value) {
-            rejestr |= Convert.ToInt16(Convert.ToInt16(value) & 0x00ff);
+            unchecked
+            {
+                // : ] działa? działa!
+                rejestr &= (Int16)0xff00U;
+            }
+            rejestr |= (Int16)(Convert.ToInt16(value) & 0x00ffU);
         }
 
         public Int16 AX;
