@@ -5,9 +5,6 @@ namespace Projekcior.Commands {
                 case "exit":
                     exit(args);
                     break;
-                case "test":
-                    mov(args);
-                    break;
                 default:
                     return false;
             }
@@ -20,10 +17,6 @@ namespace Projekcior.Commands {
             }
             Program.ExitRequest = true;
             Console.WriteLine("wychodzimy stąd");
-        }
-
-        void mov(Argument[] args) {
-            Console.WriteLine(":]");
         }
     }
 }

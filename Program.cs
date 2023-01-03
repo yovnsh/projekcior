@@ -22,6 +22,7 @@ namespace Projekcior {
                 }
                 catch(ArgumentException) {
                     Console.WriteLine("błędne argumenty");
+                    break;
                 }
                 catch(Exception err) {
                     Console.WriteLine("błąd: " + err.Message);
@@ -85,10 +86,6 @@ namespace Projekcior {
             {
                 return new PointerArgument(argument_name);
             }
-            else if(FlagArgument.Contains(argument_name))
-            {
-                return new FlagArgument(argument_name);
-            }
             else if (NumericConstant.Contains(argument_name))
             {
                 return new NumericConstant(argument_name);
@@ -118,9 +115,9 @@ namespace Projekcior {
             // rejestry
             Console.Write($"| {Program.Pamiec.Rejestry.AX, 6} | {Program.Pamiec.Rejestry.BX, 6} | {Program.Pamiec.Rejestry.CX, 6} | {Program.Pamiec.Rejestry.DX, 6} |");
             // flagi
-            Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi["OF"]), 2} | {Convert.ToInt16(Program.Pamiec.Flagi["DF"]),2} | {Convert.ToInt16(Program.Pamiec.Flagi["IF"]),2} | {Convert.ToInt16(Program.Pamiec.Flagi["TF"]),2} |");
-            Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi["SF"]),2} | {Convert.ToInt16(Program.Pamiec.Flagi["ZF"]),2} | {Convert.ToInt16(Program.Pamiec.Flagi["AF"]),2} | {Convert.ToInt16(Program.Pamiec.Flagi["PF"]),2} |");
-            Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi["CF"]),2} |");
+            Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi.OF), 2} | {Convert.ToInt16(Program.Pamiec.Flagi.DF),2} | {Convert.ToInt16(Program.Pamiec.Flagi.IF),2} | {Convert.ToInt16(Program.Pamiec.Flagi.TF),2} |");
+            Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi.SF),2} | {Convert.ToInt16(Program.Pamiec.Flagi.ZF),2} | {Convert.ToInt16(Program.Pamiec.Flagi.AF),2} | {Convert.ToInt16(Program.Pamiec.Flagi.PF),2} |");
+            Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi.CF),2} |");
             // segmenty
             Console.Write($" {Program.Pamiec.Segmenty["CS"],6} | {Program.Pamiec.Segmenty["DS"],6} | {Program.Pamiec.Segmenty["ES"],6} | {Program.Pamiec.Segmenty["SS"],6} |\n");
 

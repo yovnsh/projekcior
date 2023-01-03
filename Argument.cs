@@ -1,8 +1,3 @@
-using Microsoft.Win32;
-using System;
-using System.Data.Common;
-using System.Xml.Linq;
-
 namespace Projekcior {
     interface Argument
     {
@@ -228,6 +223,9 @@ namespace Projekcior {
         }
     }
 
+    /*
+     * nie wiem czy to bedzie potrzebe a nie chce mi sie przerabiać tego kodu po ostatniej zmianie
+     * 
     class FlagArgument : Argument
     {
         private readonly string FlagName;
@@ -288,6 +286,7 @@ namespace Projekcior {
             return Program.Pamiec.Flagi.ContainsKey(name);
         }
     }
+    */
 
     class HalfRegisterArgument : Argument
     {
@@ -470,7 +469,7 @@ namespace Projekcior {
 
         public static bool Contains(string name)
         {
-            return true;
+            return (name == "0" || name.StartsWith("0x") || name.EndsWith("b") || name.StartsWith("0") || name.All(char.IsDigit));
         }
     }
 
