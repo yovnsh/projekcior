@@ -128,6 +128,7 @@ namespace Projekcior {
             // tutaj dodajemy wszystkie grupy komend jakie chcemy żeby program używał
             Commands.Add(new ExampleCommand());
             Commands.Add(new PrzesylanieDanych());
+            Commands.Add(new KomendyArytmetyczne());
         }
     }
 }
