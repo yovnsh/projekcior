@@ -17,6 +17,7 @@ namespace Projekcior.Pamiec {
         private static void SetLowPart(ref Int16 rejestr, sbyte value) {
             rejestr |= Convert.ToInt16(Convert.ToInt16(value) & 0x00ff);
         }
+
         public Int16 AX;
         public sbyte AH {
             get {

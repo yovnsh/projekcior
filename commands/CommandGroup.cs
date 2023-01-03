@@ -1,5 +1,5 @@
 namespace Projekcior.Commands {
     interface CommandGroup {
-        bool ExecuteCommand(string command, string[] args);
+        bool ExecuteCommand(string command, Argument[] args);
     }
 }

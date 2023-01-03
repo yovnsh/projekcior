@@ -1,6 +1,6 @@
 namespace Projekcior.Commands {
     class ExampleCommand : CommandGroup {
-        public bool ExecuteCommand(string cmd, string[] args) {
+        public bool ExecuteCommand(string cmd, Argument[] args) {
             switch(cmd) {
                 case "exit":
                     exit(args);
@@ -14,7 +14,7 @@ namespace Projekcior.Commands {
             return true;
         }
 
-        void exit(string[] args) {
+        void exit(Argument[] args) {
             if(args.Length > 0) {
                 throw new ArgumentException();
             }
@@ -22,8 +22,8 @@ namespace Projekcior.Commands {
             Console.WriteLine("wychodzimy stąd");
         }
 
-        void mov(string[] args) {
-            
+        void mov(Argument[] args) {
+            Console.WriteLine(":]");
         }
     }
 }
