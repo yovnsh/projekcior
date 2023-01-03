@@ -103,12 +103,12 @@ namespace Projekcior {
                     throw new ArgumentException("podana nazwa nie jest rejestrem");
             }
         }
-    }
 
+    }
     class SegmentArgument : Argument
     {
         private readonly string SegmentName;
-        public Int16 Segment
+        public UInt16 Segment
         {
             get
             {
@@ -132,7 +132,10 @@ namespace Projekcior {
 
         public Int16 Get()
         {
-            return Segment;
+            unchecked
+            {
+                return (Int16)Segment;
+            }
         }
 
         public sbyte Get_Sbyte()
@@ -147,12 +150,18 @@ namespace Projekcior {
 
         public void Set(Argument other)
         {
-            Segment = other.Get();
+            unchecked
+            {
+                Segment = (UInt16)other.Get();
+            }
         }
 
         public void Set(Int16 value)
         {
-            Segment = value;
+            unchecked
+            {
+                Segment = (UInt16)value;
+            }
         }
 
 
@@ -462,6 +471,59 @@ namespace Projekcior {
         public static bool Contains(string name)
         {
             return true;
+        }
+    }
+
+    class MemoryArgument : Argument
+    {
+        private readonly UInt16 adress;
+
+        public MemoryArgument(string adress_string)
+        {
+            // to można poprawić ---
+            // moge to jakoś zrobić żeby korzystało z faktycznego sposobu adresowania a nie tego chujostwa
+
+            string raw_adress = adress_string.Substring(1, adress_string.Length - 2);
+            adress = (UInt16)Program.ReadArgument(raw_adress).Get();
+        }
+
+        public Int16 Get()
+        {
+            return Convert.ToInt16(Program.Pamiec.PamiecAdresowana[adress]);
+        }
+
+        public UInt16 GetAddress()
+        {
+            return adress;
+        }
+
+        public bool Get_Bool()
+        {
+            throw new Exception("chyba powinienem móc wczytać tylko int16 z pamięci");
+        }
+        public sbyte Get_Sbyte()
+        {
+            throw new Exception("chyba powinienem móc wczytać tylko int16 z pamięci");
+        }
+
+        public void Set(Argument value)
+        {
+            Program.Pamiec.PamiecAdresowana[adress] = value.Get().ToString();
+        }
+
+        public void Set(Int16 value)
+        {
+            Program.Pamiec.PamiecAdresowana[adress] = value.ToString();
+        }
+
+
+        public static bool Contains(string name)
+        {
+            if(name.StartsWith("[") && name.EndsWith("]"))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

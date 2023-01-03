@@ -76,7 +76,12 @@ namespace Projekcior.Commands
             {
                 throw new ArgumentException("nieprawidłowa liczba argumentów");
             }
-            Program.Pamiec.Stos.Push(args[0].Get());
+            UInt16 stack_segment = Program.Pamiec.Segmenty["SS"];
+            UInt16 stack_pointer = Program.Pamiec.Wskazniki["SP"];
+            stack_pointer += 1;
+            Program.Pamiec.Wskazniki["SP"] = stack_pointer;
+            Program.Pamiec.PamiecAdresowana[stack_segment + stack_pointer] = args[0].Get().ToString();
+
         }
 
         void pop(Argument[] args)
@@ -85,12 +90,20 @@ namespace Projekcior.Commands
             {
                 throw new ArgumentException("nieprawidłowa liczba argumentów");
             }
-            args[0].Set(Program.Pamiec.Stos.Pop());
+            UInt16 stack_segment = Program.Pamiec.Segmenty["SS"];
+            UInt16 stack_pointer = Program.Pamiec.Wskazniki["SP"];
+            args[0].Set(Convert.ToInt16(Program.Pamiec.PamiecAdresowana[stack_segment + stack_pointer]));
+            stack_pointer -= 1;
+            Program.Pamiec.Wskazniki["SP"] = stack_pointer;
         }
 
         void xchg(Argument[] args)
         {
             // typy
+            if(args.Length != 2)
+            {
+                throw new ArgumentException("nieprawidłowa liczba argumentów");
+            }
             Int16 tmp = args[0].Get();
             args[0].Set(args[1]);
             args[1].Set(tmp);

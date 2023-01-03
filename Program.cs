@@ -53,7 +53,7 @@ namespace Projekcior {
             Argument[] args_converted = new Argument[args.Length];
             for(int n = 0; n < args.Length; n++)
             {
-                args_converted[n] = ReadArgument1(args[n]);
+                args_converted[n] = ReadArgument(args[n]);
             }
             
             bool command_found = false;
@@ -68,7 +68,7 @@ namespace Projekcior {
                 Console.WriteLine("nieznana komenda");
             }
         }
-        public static Argument ReadArgument1(string argument_name) {
+        public static Argument ReadArgument(string argument_name) {
             if(RegisterArgument.Contains(argument_name))
             {
                 return new RegisterArgument(argument_name);
@@ -89,9 +89,17 @@ namespace Projekcior {
             {
                 return new FlagArgument(argument_name);
             }
-            else
+            else if (NumericConstant.Contains(argument_name))
             {
                 return new NumericConstant(argument_name);
+            } 
+            else if (MemoryArgument.Contains(argument_name))
+            {
+                return new MemoryArgument(argument_name);
+            }
+            else
+            {
+                throw new ArgumentException("nieznany argument", argument_name);
             }
         }
 
@@ -122,6 +130,7 @@ namespace Projekcior {
         public static void RegisterCommands() {
             // tutaj dodajemy wszystkie grupy komend jakie chcemy żeby program używał
             Commands.Add(new ExampleCommand());
+            Commands.Add(new PrzesylanieDanych());
         }
     }
 }
