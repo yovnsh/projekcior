@@ -102,15 +102,15 @@ namespace Projekcior {
 
         public static void PrintData()
         {
-            Console.WriteLine($" ___________________________________ ____________________________________________ ___________________________________");
-            Console.WriteLine($"|                                   |                                            |                                   |");
-            Console.WriteLine($"|              Rejestry             |                    Flagi                   |              Segmenty             |");
-            Console.WriteLine($"|___________________________________|____________________________________________|___________________________________|");
-            Console.WriteLine($"|        |        |        |        |    |    |    |    |    |    |    |    |    |        |        |        |        |");
+            Console.WriteLine($" ___________________________________ ____________________________________________ _________________");
+            Console.WriteLine($"|                                   |                                            |                 |");
+            Console.WriteLine($"|              Rejestry             |                    Flagi                   |    Wskazniki    |");
+            Console.WriteLine($"|___________________________________|____________________________________________|_________________|");
+            Console.WriteLine($"|        |        |        |        |    |    |    |    |    |    |    |    |    |        |        |");
 
             Console.Write($"| {"AX", 6} | {"BX", 6} | {"CX", 6} | {"DX", 6} |");
             Console.Write($" OF | DF | IF | TF | SF | ZF | AF | PF | CF |");
-            Console.Write($" {"CS", 6} | {"DS", 6} | {"ES", 6} | {"SS", 6} |\n");
+            Console.Write($" {"IP", 6} | {"SP", 6} |\n");
 
             // rejestry
             Console.Write($"| {Program.Pamiec.Rejestry.AX, 6} | {Program.Pamiec.Rejestry.BX, 6} | {Program.Pamiec.Rejestry.CX, 6} | {Program.Pamiec.Rejestry.DX, 6} |");
@@ -119,9 +119,9 @@ namespace Projekcior {
             Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi.SF),2} | {Convert.ToInt16(Program.Pamiec.Flagi.ZF),2} | {Convert.ToInt16(Program.Pamiec.Flagi.AF),2} | {Convert.ToInt16(Program.Pamiec.Flagi.PF),2} |");
             Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi.CF),2} |");
             // segmenty
-            Console.Write($" {Program.Pamiec.Segmenty["CS"],6} | {Program.Pamiec.Segmenty["DS"],6} | {Program.Pamiec.Segmenty["ES"],6} | {Program.Pamiec.Segmenty["SS"],6} |\n");
+            Console.Write($" {Program.Pamiec.Wskazniki["IP"],6} | {Program.Pamiec.Wskazniki["SP"],6} |\n");
 
-            Console.WriteLine($"|________|________|________|________|____|____|____|____|____|____|____|____|____|________|________|________|________|");
+            Console.WriteLine($"|________|________|________|________|____|____|____|____|____|____|____|____|____|________|________|");
         }
 
         public static void RegisterCommands() {
