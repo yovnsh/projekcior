@@ -20,7 +20,7 @@ namespace Projekcior {
 
     class RegisterArgument : Argument
     {
-        private readonly string RegisterName;
+        public readonly string RegisterName;
         public Int16 Register
         {
             get
@@ -111,7 +111,7 @@ namespace Projekcior {
 
     class SegmentArgument : Argument
     {
-        private readonly string SegmentName;
+        public readonly string SegmentName;
         public UInt16 Segment
         {
             get
@@ -182,7 +182,7 @@ namespace Projekcior {
 
     class PointerArgument : Argument
     {
-        private readonly string PointerName;
+        public readonly string PointerName;
         public UInt16 Pointer
         {
             get
@@ -325,7 +325,7 @@ namespace Projekcior {
 
     class HalfRegisterArgument : Argument
     {
-        private readonly string HalfRegisterName;
+        public readonly string HalfRegisterName;
         public sbyte HalfRegister
         {
             get
@@ -452,7 +452,7 @@ namespace Projekcior {
     }
 
     class NumericConstant : Argument {
-        private readonly Int16 value;
+        public readonly Int16 value;
 
         public NumericConstant(string number_string)
         {
@@ -555,7 +555,7 @@ namespace Projekcior {
 
     class MemoryArgument : Argument
     {
-        private readonly UInt16 adress;
+        public readonly UInt16 adress;
 
         public MemoryArgument(string adress_string)
         {

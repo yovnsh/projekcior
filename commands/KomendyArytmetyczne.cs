@@ -68,7 +68,7 @@ namespace Projekcior.Commands
             return true;
         }
 
-        bool is_even_parity(Int16 n)
+        public static bool is_even_parity(Int16 n)
         {
             bool parzysty = true;
             while (n > 0)

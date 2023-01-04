@@ -9,7 +9,6 @@ namespace Projekcior {
         public static Hipokamp Pamiec = new Hipokamp();
 
         public static void Main() {
-            // init
             RegisterCommands();
 
             Console.WriteLine("czeć");
@@ -189,6 +188,7 @@ namespace Projekcior {
             Commands.Add(new ExampleCommand());
             Commands.Add(new PrzesylanieDanych());
             Commands.Add(new KomendyArytmetyczne());
+            Commands.Add(new KomendyLogiczne());
         }
     }
 }
