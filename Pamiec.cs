@@ -11,9 +11,6 @@ namespace Projekcior {
 
         public MagazynRejestrow Rejestry = new MagazynRejestrow();
         public MagazynFlag Flagi = new MagazynFlag();
-        //public Dictionary<string, bool> Flagi = new Dictionary<string, bool>();
-        //public Stack<Int16> Stos = new Stack<Int16>(0xffff);
-        //public Int16[] Pamiec = new Int16[0xffff];
         public Dictionary<string, UInt16> Segmenty = new Dictionary<string, UInt16>();
         public Dictionary<string, UInt16> Wskazniki = new Dictionary<string, UInt16>();
 

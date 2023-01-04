@@ -1,7 +1,3 @@
-using System.Globalization;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-
 namespace Projekcior.Commands
 {
     class Skoki : CommandGroup

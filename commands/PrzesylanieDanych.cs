@@ -324,21 +324,31 @@ namespace Projekcior.Commands
                 throw new ArgumentException("nieprawidłowa liczba argumentów");
             }
 
-            if (args[1].GetType() != typeof(NumericConstant) && args[1].GetType() != typeof(RegisterArgument) && args[1].GetType() != typeof(HalfRegisterArgument))
-            {
-                throw new ArgumentException("drugi argument może być tylko liczbą lub rejestrem AX lub AL");
-            }
-
-            if (args[1].GetType() == typeof(HalfRegisterArgument) && ((HalfRegisterArgument)args[1]).HalfRegisterName != "AL")
-            {
-                throw new ArgumentException("drugi argument może być tylko rejestrem AX lub AL");
-            }
-            else if (args[1].GetType() == typeof(RegisterArgument) && ((RegisterArgument)args[1]).RegisterName != "AX")
+            if (args[1].GetType() != typeof(RegisterArgument) && args[1].GetType() != typeof(HalfRegisterArgument))
             {
                 throw new ArgumentException("drugi argument może być tylko rejestrem AX lub AL");
             }
 
-            Console.WriteLine("Wyjscie: " + args[0].Get());
+            if (args[0].GetType() == typeof(HalfRegisterArgument) && ((HalfRegisterArgument)args[1]).HalfRegisterName != "AL")
+            {
+                throw new ArgumentException("drugi argument może być tylko rejestrem AX lub AL");
+            }
+            else if (args[0].GetType() == typeof(RegisterArgument) && ((RegisterArgument)args[1]).RegisterName != "AX")
+            {
+                throw new ArgumentException("drugi argument może być tylko rejestrem AX lub AL");
+            }
+
+            if (args[0].GetType() != typeof(NumericConstant) && args[0].GetType() != typeof(RegisterArgument))
+            {
+                throw new ArgumentException("pierwszy argument może być tylko liczbą lub rejestrem DX");
+            }
+
+            if (args[1].GetType() == typeof(RegisterArgument) && ((RegisterArgument)args[1]).RegisterName != "DX")
+            {
+                throw new ArgumentException("pierwszy argument może być tylko rejestrem DX");
+            }
+
+            Console.WriteLine("Wyjscie: " + args[1].Get());
             Console.WriteLine("[wcisnij cokolwiek aby kontynuowac]");
             Console.ReadKey();
         }

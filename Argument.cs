@@ -9,9 +9,7 @@ namespace Projekcior {
         void Set(Argument value);
         void Set(Int16 value);
 
-        /// <summary>
-        /// sprawdza czy nazwa jest prawidłowa dla konkretnego typu
-        /// </summary>
+        // sprawdza czy nazwa jest prawidłowa dla konkretnego typu argumentu
         static bool Contains(string name)
         {
             return false;
@@ -377,7 +375,7 @@ namespace Projekcior {
                 value = 0;
             }
 
-            // jeśli sie zaczyna plusem to usuwamy plusa
+            // jeśli sie zaczyna plusem to go usuwamy
             if(number_string.StartsWith("+"))
             {
                 number_string = number_string.Substring(1);
@@ -442,7 +440,7 @@ namespace Projekcior {
         {
             unchecked
             {
-                // to wygląda dziwnie ale po prostu chce żeby 0b11111111 też sie dało tak zapisać
+                // chce żeby 0b11111111 też sie dało tak zapisać
                 return (sbyte)((byte)(value));
             }
         }
@@ -475,9 +473,6 @@ namespace Projekcior {
 
         public MemoryArgument(string adress_string)
         {
-            // to można poprawić ---
-            // moge to jakoś zrobić żeby korzystało z faktycznego sposobu adresowania a nie tego chujostwa
-
             string raw_adress = adress_string.Substring(1, adress_string.Length - 2);
             adress = (UInt16)Program.ReadArgument(raw_adress).Get();
         }
@@ -499,11 +494,11 @@ namespace Projekcior {
 
         public bool Get_Bool()
         {
-            throw new Exception("chyba powinienem móc wczytać tylko int16 z pamięci");
+            throw new Exception("z pamięci można tylko int16 z pamięci");
         }
         public sbyte Get_Sbyte()
         {
-            throw new Exception("chyba powinienem móc wczytać tylko int16 z pamięci");
+            throw new Exception("można wczytać tylko int16 z pamięci");
         }
 
         public void Set(Argument value)

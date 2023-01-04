@@ -42,7 +42,7 @@ namespace Projekcior.Pamiec
             }
         }
 
-        // overflow flag - kiedy wykroczymy poza limit liczby np pomnożymy dwie bardzo duże liczby i magicznie zrobi się ujemna
+        // overflow flag - kiedy wykroczymy poza limit liczby
         // ----x--- --------
         public bool OF
         {
@@ -56,7 +56,7 @@ namespace Projekcior.Pamiec
             }
         }
 
-        // sign flag - kiedy wynik operacji jest ujemny przyjmuje 1 (w praktyce to znaczy że pierwszy bit = 1)
+        // direction flag
         // -----x-- --------
         public bool DF
         {
@@ -70,7 +70,7 @@ namespace Projekcior.Pamiec
             }
         }
 
-        // interrupt flag - kiedy 1 przerwania będą rejestrowane, jeśli 0 nie
+        // interrupt flag
         // ------x- --------
         public bool IF
         {
@@ -84,7 +84,7 @@ namespace Projekcior.Pamiec
             }
         }
 
-        // trap flag - kiedy 1 instrukcje są wykonywane pojedyńczo (po każdej uruchamiane jest przerwanie)
+        // trap flag - kiedy 1 po każdej instrukcji uruchamiane jest przerwanie
         // -------x --------
         public bool TF
         {
@@ -98,7 +98,7 @@ namespace Projekcior.Pamiec
             }
         }
 
-        // sign flag - kiedy wynik operacji jest ujemny przyjmuje 1 (w praktyce to znaczy że pierwszy bit = 1)
+        // sign flag - kiedy wynik operacji jest ujemny
         // -------- x-------
         public bool SF
         {
@@ -112,7 +112,7 @@ namespace Projekcior.Pamiec
             }
         }
 
-        // zero flag - kiedy wynik operacji matematycznej jest równy 0 przyjmuje 1
+        // zero flag - kiedy wynik operacji matematycznej jest równy 0
         // -------- -x------
         public bool ZF
         {
@@ -126,7 +126,7 @@ namespace Projekcior.Pamiec
             }
         }
 
-        // auxiliary carry flag (cokolwiek to znaczy) - kiedy przy operacjach BCD (czyli chyba w systemie 10) nastąpi przeniesienie do następnej kolumny
+        // auxiliary carry flag - kiedy przy operacjach BCD nastąpi przeniesienie do następnej kolumny
         // -------- ---x----
         public bool AF
         {
@@ -140,7 +140,7 @@ namespace Projekcior.Pamiec
             }
         }
 
-        // parity flag - kiedy liczba jedynek w binarnej reprezentacji liczby jest kurwa parzysta XD ustawia sie na 1
+        // parity flag - kiedy liczba ustawionych bitów jest przysta w binarnej reprezentacji
         // -------- ------x--
         public bool PF
         {
