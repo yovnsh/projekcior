@@ -51,8 +51,9 @@ namespace Projekcior.Commands
             return true;
         }
 
-        // kopiuje dane z argumentu 1 do argumentu 0
+        // kopiuje dane z argumentu[1] do argumentu [0]
         // arg[0] = arg[1]
+        // 2 argumenty
         void mov(Argument[] args)
         {
             // typy sprawdzić
@@ -64,7 +65,8 @@ namespace Projekcior.Commands
             args[0].Set(args[1]);
         }
 
-        // wstawia argument 0 na stack
+        // wstawia argument[0] na stack
+        // 1 argument
         void push(Argument[] args)
         {
             if (args.Length != 1)
@@ -73,13 +75,26 @@ namespace Projekcior.Commands
             }
             UInt16 stack_segment = Program.Pamiec.Segmenty["SS"];
             UInt16 stack_pointer = Program.Pamiec.Wskazniki["SP"];
-            stack_pointer += 1;
+
+            try
+            {
+                checked
+                {
+                    stack_pointer += 1;
+                    UInt16 stack_overflow_check = (UInt16)(stack_pointer + stack_segment);
+                }
+            }
+            catch (OverflowException)
+            {
+                throw new Exception("stack overflow");
+            }
+
             Program.Pamiec.Wskazniki["SP"] = stack_pointer;
             Program.Pamiec.PamiecAdresowana[stack_segment + stack_pointer] = args[0].Get().ToString();
-
         }
 
-        // ściąga ostatnią liczbę ze stack'u i zapisuje ją w argumencie 0
+        // ściąga ostatnią liczbę ze stack'u i zapisuje ją w argumencie[0]
+        // 1 argument
         void pop(Argument[] args)
         {
             if (args.Length != 1)
@@ -89,11 +104,24 @@ namespace Projekcior.Commands
             UInt16 stack_segment = Program.Pamiec.Segmenty["SS"];
             UInt16 stack_pointer = Program.Pamiec.Wskazniki["SP"];
             args[0].Set(Convert.ToInt16(Program.Pamiec.PamiecAdresowana[stack_segment + stack_pointer]));
-            stack_pointer -= 1;
+
+            try
+            {
+                checked
+                {
+                    stack_pointer -= 1;
+                }
+            }
+            catch (OverflowException)
+            {
+                throw new Exception("stack underflow");
+            }
+
             Program.Pamiec.Wskazniki["SP"] = stack_pointer;
         }
 
-        // podmienia wartości argumentu 0 i argumentu 1
+        // podmienia wartości argumentu[0] i argumentu[1]
+        // 2 argumenty
         void xchg(Argument[] args)
         {
             // typy
@@ -106,9 +134,9 @@ namespace Projekcior.Commands
             args[1].Set(tmp);
         }
 
-
-        // zapisuje w argumencie 0 adres pamięci podanej w argumencie 1
-        // argument 1 musi być pamięcią
+        // zapisuje w argumencie[0] adres pamięci podanej w argumencie[1]
+        // argument[1] musi być pamięcią
+        // 2 argumenty
         void lea(Argument[] args)
         {
             if (args.Length != 2)
@@ -126,9 +154,9 @@ namespace Projekcior.Commands
             args[0].Set((Int16) mem.GetAddress());
         }
 
-
-        // zapisuje w argumencie 0 wartość rejestru DS + adres pamięci podanej w argumencie 1
-        // argument 1 musi być pamięcią
+        // zapisuje w argumenci[0] wartość rejestru DS + adres pamięci podanej w argumencie[1]
+        // argument[1] musi być pamięcią
+        // 2 argumenty
         void lds(Argument[] args)
         {
             if (args.Length != 2)
@@ -145,7 +173,7 @@ namespace Projekcior.Commands
             args[0].Set((Int16)(Program.Pamiec.Segmenty["DS"] + mem.GetAddress()));
         }
 
-        // zapisuje w argumencie 0 wartość rejestru ES + adres pamięci podanej w argumencie 1
+        // zapisuje w argumencie[0] wartość rejestru ES + adres pamięci podanej w argumencie [1]
         // argument 1 musi być pamięcią
         void les(Argument[] args)
         {
@@ -200,6 +228,7 @@ namespace Projekcior.Commands
                 Program.Pamiec.Rejestry.AH = (sbyte)((Program.Pamiec.Flagi.FlagiSurowe & 0xff00) >> 8);
             }
         }
+
 
         void popf(Argument[] args)
         {

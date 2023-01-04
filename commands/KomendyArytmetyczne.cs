@@ -1,4 +1,5 @@
 using System;
+using System.Net.Security;
 
 namespace Projekcior.Commands
 {
@@ -61,6 +62,12 @@ namespace Projekcior.Commands
                     break;
                 case "cwd":
                     cwd(args);
+                    break;
+                case "neg":
+                    neg(args);
+                    break;
+                case "cmp":
+                    cmp(args);
                     break;
                 default:
                     return false;
@@ -570,6 +577,33 @@ namespace Projekcior.Commands
             {
                 Program.Pamiec.Rejestry.DX = 0;
             }
+        }
+
+        void neg(Argument[] args)
+        {
+            if(args.Length != 1)
+            {
+                throw new ArgumentException("nieprawidłowa liczba argumentów");
+            }
+
+            Int16 value = args[0].Get();
+
+            Program.Pamiec.Flagi.CF = value != 0;
+            value = (Int16)(-value);
+
+            args[0].Set(value);
+
+            Program.Pamiec.Flagi.ZF = value == 0;
+            Program.Pamiec.Flagi.SF = value < 0;
+            Program.Pamiec.Flagi.PF = is_even_parity(value);
+        }
+
+        void cmp(Argument[] args)
+        {
+            sub(args); // flagi mają być tak ustawione jak po odejmowaniu
+            UInt16 flagi = Program.Pamiec.Flagi.FlagiSurowe;
+            add(args); // przywracamy operand 1
+            Program.Pamiec.Flagi.FlagiSurowe = flagi;
         }
     }
 }
