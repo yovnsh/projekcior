@@ -1,9 +1,12 @@
 namespace Projekcior.Commands {
-    class ExampleCommand : CommandGroup {
+    class ExitCommand : CommandGroup {
         public bool ExecuteCommand(string cmd, Argument[] args) {
             switch(cmd) {
                 case "exit":
-                    exit(args);
+                    if(Program.ShellMode)
+                    {
+                        exit(args);
+                    }
                     break;
                 default:
                     return false;
