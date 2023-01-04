@@ -3,12 +3,18 @@ namespace Projekcior.Pamiec {
         private static sbyte HighPart(Int16 rejestr) {
             // pobiera z rejestru lewą strone
             // xxxx xxxx ---- ----
-            return Convert.ToSByte(rejestr & 0xff00);
+            unchecked
+            {
+                return (sbyte)(rejestr & 0xff00U);
+            }
         }
         private static sbyte LowPart(Int16 rejestr) {
             // pobiera z rejestru prawą stronę
             // ---- ---- xxxx xxxx
-            return Convert.ToSByte(rejestr & 0x00ff);
+            unchecked
+            {
+                return (sbyte)(rejestr & 0x00ffU);
+            }
         }
         private static void SetHighPart(ref Int16 rejestr, sbyte value) {
             rejestr &= (Int16)0x00ffU;
@@ -23,7 +29,6 @@ namespace Projekcior.Pamiec {
             }
             rejestr |= (Int16)(Convert.ToInt16(value) & 0x00ffU);
         }
-
         public Int16 AX;
         public sbyte AH {
             get {

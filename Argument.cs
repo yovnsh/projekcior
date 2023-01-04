@@ -398,12 +398,14 @@ namespace Projekcior {
 
         public Int16 Get()
         {
-            throw new Exception("nie można przenkwertować połówki rejestru na Int16");
+            return (Int16) HalfRegister;
         }
 
         public UInt16 GetUnsigned()
         {
-            throw new Exception("nie można przenkwertować połówki rejestru na Int16");
+            unchecked {
+                return (UInt16)HalfRegister;
+            }
         }
 
         public sbyte Get_Sbyte()
@@ -423,7 +425,10 @@ namespace Projekcior {
 
         public void Set(Int16 value)
         {
-            HalfRegister = Convert.ToSByte(value);
+            unchecked
+            {
+                HalfRegister = (sbyte)(value);
+            }
         }
 
 
@@ -522,7 +527,7 @@ namespace Projekcior {
             unchecked
             {
                 // to wygląda dziwnie ale po prostu chce żeby 0b11111111 też sie dało tak zapisać
-                return (sbyte)(Convert.ToByte(value));
+                return (sbyte)((byte)(value));
             }
         }
 
