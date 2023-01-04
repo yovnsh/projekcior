@@ -159,18 +159,12 @@ namespace Projekcior {
 
         public void Set(Argument other)
         {
-            unchecked
-            {
-                Segment = (UInt16)other.Get();
-            }
+            throw new Exception("nie wolno zmieniać segmentów");
         }
 
         public void Set(Int16 value)
         {
-            unchecked
-            {
-                Segment = (UInt16)value;
-            }
+            throw new Exception("nie wolno zmieniać segmentów");
         }
 
 
@@ -230,18 +224,12 @@ namespace Projekcior {
 
         public void Set(Argument other)
         {
-            unchecked
-            {
-                Pointer = (UInt16)other.Get();
-            }
+            throw new Exception("nie wolno zmieniać wskaźników");
         }
 
         public void Set(Int16 value)
         {
-            unchecked
-            {
-                Pointer = (UInt16)value;
-            }
+            throw new Exception("nie wolno zmieniać wskaźników");
         }
 
 
@@ -250,78 +238,6 @@ namespace Projekcior {
             return Program.Pamiec.Wskazniki.ContainsKey(name);
         }
     }
-
-    /*
-     * nie wiem czy to bedzie potrzebe a nie chce mi sie przerabiać tego kodu po ostatniej zmianie
-     * 
-    class FlagArgument : Argument
-    {
-        private readonly string FlagName;
-        public bool Flag
-        {
-            get
-            {
-                switch(FlagName)
-                {
-                    case "OF":
-                        return Program.Pamiec.Flagi.
-                }
-            }
-            set
-            {
-                switch()
-                {
-
-                }
-            }
-        }
-
-        public FlagArgument(string name)
-        {
-            if (!Contains(name))
-            {
-                throw new ArgumentException("podana nazwa nie jest segmentem");
-            }
-
-            FlagName = name;
-        }
-
-        public Int16 Get()
-        {
-            return Convert.ToInt16(Flag);
-        }
-
-        public sbyte Get_Sbyte()
-        {
-            return Convert.ToSByte(Flag);
-        }
-
-        public bool Get_Bool()
-        {
-            return Flag;
-        }
-
-        public void Set(Argument other)
-        {
-            Flag = other.Get_Bool();
-        }
-
-        public void Set(Int16 value)
-        {
-            if(value != 0 && value != 1)
-            {
-                throw new ArgumentException("nie można przypisać liczby do flagi");
-            }
-            Flag = Convert.ToBoolean(value);
-        }
-
-
-        public static bool Contains(string name)
-        {
-            return Program.Pamiec.Flagi.ContainsKey(name);
-        }
-    }
-    */
 
     class HalfRegisterArgument : Argument
     {
@@ -474,11 +390,11 @@ namespace Projekcior {
                 number_string = number_string.Substring(1);
             }
 
-            if(number_string.StartsWith("0x"))
+            if(number_string.StartsWith("0X"))
             {
                 value = (Int16)(sign * Convert.ToInt16(number_string.Substring(2), 16));
             }
-            else if (number_string.EndsWith("b"))
+            else if (number_string.EndsWith("B"))
             {
                 value = (Int16)(sign * Convert.ToInt16(number_string.Substring(0, number_string.Length - 1), 2));
             }
@@ -549,7 +465,7 @@ namespace Projekcior {
             {
                 copy = copy.Substring(1);
             }
-            return (copy == "0" || copy.StartsWith("0x") || copy.EndsWith("b") || copy.StartsWith("0") || copy.All(char.IsDigit));
+            return (copy == "0" || copy.StartsWith("0X") || copy.EndsWith("B") || copy.StartsWith("0") || copy.All(char.IsDigit));
         }
     }
 

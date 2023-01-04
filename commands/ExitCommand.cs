@@ -6,12 +6,14 @@ namespace Projekcior.Commands {
                     if(Program.ShellMode)
                     {
                         exit(args);
+                        return true;
+                    } else
+                    {
+                        return false;
                     }
-                    break;
                 default:
                     return false;
             }
-            return true;
         }
 
         void exit(Argument[] args) {

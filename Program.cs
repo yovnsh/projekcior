@@ -9,6 +9,7 @@ namespace Projekcior {
         public static Hipokamp Pamiec = new Hipokamp();
         public static string OstatniaInstrukcja = "";
         public static bool ShellMode = false;
+        public static Int16 InterruptCode = 0;
 
 
         // punkt wejściowy
@@ -147,8 +148,12 @@ namespace Projekcior {
         /// var cmd2 = "file \"nazwa ze spacjami\" --debug";
         /// Console.WriteLine(ParseCLIArguments(cmd2).ToString()); // ["file", "nazwa ze spacjami", "--debug"]
         /// </example>
-        static string[] ParseCLIArguments(string commandLine)
+        static string[] ParseCLIArguments(string? commandLine)
         {
+            if(commandLine == null || commandLine.Length == 0) {
+                return new string[] {};
+            }
+
             char[] parmChars = commandLine.ToCharArray();
             bool inQuote = false;
             for (int index = 0; index < parmChars.Length; index++)
@@ -314,18 +319,24 @@ namespace Projekcior {
                 catch (NotImplementedException)
                 {
                     Console.WriteLine("\nkiedyś zadziała");
-                    break;
+                    Console.WriteLine("[wcisnij cokolwiek aby kontynuowac]");
+                    Console.ReadKey();
+                    continue;
                 }
                 catch (ArgumentException exception)
                 {
                     Console.WriteLine("\nbłędne argumenty");
                     Console.WriteLine(exception.Message);
-                    break;
+                    Console.WriteLine("[wcisnij cokolwiek aby kontynuowac]");
+                    Console.ReadKey();
+                    continue;
                 }
                 catch (Exception err)
                 {
                     Console.WriteLine("\nbłąd: " + err.Message);
-                    break;
+                    Console.WriteLine("[wcisnij cokolwiek aby kontynuowac]");
+                    Console.ReadKey();
+                    continue;
                 }
             }
         }
@@ -350,7 +361,7 @@ namespace Projekcior {
             if (tmp.Length == 1) {
                 args = new string[0];
             } else {
-                args = tmp[1].Replace(" ", "").Split(",");
+                args = tmp[1].Replace(" ", "").ToUpper().Split(",");
             }
 
             Argument[] args_converted = new Argument[args.Length];
@@ -363,11 +374,21 @@ namespace Projekcior {
             foreach(CommandGroup group in Commands) {
                 if(group.ExecuteCommand(cmd, args_converted)) {
                     command_found = true;
+
+                    if(Program.Pamiec.Flagi.TF)
+                    {
+                        Program.Pamiec.Flagi.IF = true;
+                        Program.InterruptCode = 0;
+                    }
+
                     try
                     {
                         checked
                         {
-                            Program.Pamiec.Wskazniki["IP"]++;
+                            if (group.GetType() != typeof(Skoki))
+                            {
+                                Program.Pamiec.Wskazniki["IP"]++;
+                            }
                             Program.OstatniaInstrukcja = instruction;
                         }
                     }
@@ -377,6 +398,15 @@ namespace Projekcior {
                         ExitRequest = true;
                         return;
                     }
+
+                    if(Program.Pamiec.Flagi.IF)
+                    {
+                        Console.WriteLine("INTERRUPT " + Program.InterruptCode);
+                        Console.WriteLine("[kliknij cokolwiek aby kontynuuować]");
+                        Console.ReadKey();
+                        Program.Pamiec.Flagi.IF = false;
+                    }
+
                     break;
                 }
             }
@@ -414,13 +444,6 @@ namespace Projekcior {
             {
                 return new PointerArgument(argument_name);
             }
-            /*
-             * nic tu nigdy nie istniało
-            else if (FlagArgument.Contains(argument_name))
-            {
-                return new FlagArgument(argument_name);
-            }
-            */
             else if (NumericConstant.Contains(argument_name))
             {
                 return new NumericConstant(argument_name);
@@ -467,7 +490,7 @@ namespace Projekcior {
             Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi.SF),2} | {Convert.ToInt16(Program.Pamiec.Flagi.ZF),2} | {Convert.ToInt16(Program.Pamiec.Flagi.AF),2} | {Convert.ToInt16(Program.Pamiec.Flagi.PF),2} |");
             Console.Write($" {Convert.ToInt16(Program.Pamiec.Flagi.CF),2} |");
 
-            if(Program.Pamiec.Wskazniki["IP"] == 0)
+            if(Program.OstatniaInstrukcja == "")
             {
                 Console.Write($" {"---",25} |");
             }
@@ -523,6 +546,8 @@ namespace Projekcior {
             Commands.Add(new PrzesylanieDanych());
             Commands.Add(new KomendyArytmetyczne());
             Commands.Add(new KomendyLogiczne());
+            Commands.Add(new Skoki());
+            Commands.Add(new Przerwania());
         }
     }
 }

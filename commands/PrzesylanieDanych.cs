@@ -45,6 +45,12 @@ namespace Projekcior.Commands
                 case "clc":
                     clc(args);
                     break;
+                case "in":
+                    input(args);
+                    break;
+                case "out":
+                    output(args);
+                    break;
                 default:
                     return false;
             }
@@ -57,7 +63,7 @@ namespace Projekcior.Commands
         void mov(Argument[] args)
         {
             // typy sprawdzić
-            if(args.Length != 2)
+            if (args.Length != 2)
             {
                 throw new ArgumentException("nieprawidłowa liczba argumentów");
             }
@@ -125,7 +131,7 @@ namespace Projekcior.Commands
         void xchg(Argument[] args)
         {
             // typy
-            if(args.Length != 2)
+            if (args.Length != 2)
             {
                 throw new ArgumentException("nieprawidłowa liczba argumentów");
             }
@@ -149,9 +155,9 @@ namespace Projekcior.Commands
                 throw new ArgumentException("drugi argument musi być wskaźnikiem pamięci");
             }
 
-            MemoryArgument mem = (MemoryArgument) args[1];
+            MemoryArgument mem = (MemoryArgument)args[1];
 
-            args[0].Set((Int16) mem.GetAddress());
+            args[0].Set((Int16)mem.GetAddress());
         }
 
         // zapisuje w argumenci[0] wartość rejestru DS + adres pamięci podanej w argumencie[1]
@@ -199,7 +205,7 @@ namespace Projekcior.Commands
         // 0 argumentów
         void lahf(Argument[] args)
         {
-            if(args.Length > 0)
+            if (args.Length > 0)
             {
                 throw new ArgumentException("nieprawidłowa liczba argumentów");
             }
@@ -218,7 +224,7 @@ namespace Projekcior.Commands
         // 0 argumentów
         void sahf(Argument[] args)
         {
-            if(args.Length > 0)
+            if (args.Length > 0)
             {
                 throw new ArgumentException("nieprawidłowa liczba argumentów");
             }
@@ -232,7 +238,7 @@ namespace Projekcior.Commands
 
         void popf(Argument[] args)
         {
-            if(args.Length != 0)
+            if (args.Length != 0)
             {
                 throw new ArgumentException("nieprawidłowa liczba argumentów");
             }
@@ -263,7 +269,7 @@ namespace Projekcior.Commands
             Int16 to_wkladamy_na_stack;
             unchecked
             {
-                to_wkladamy_na_stack = (Int16) Program.Pamiec.Flagi.FlagiSurowe;
+                to_wkladamy_na_stack = (Int16)Program.Pamiec.Flagi.FlagiSurowe;
             }
             Program.Pamiec.PamiecAdresowana[stack_segment + stack_pointer] = to_wkladamy_na_stack.ToString();
 
@@ -278,6 +284,63 @@ namespace Projekcior.Commands
         void clc(Argument[] args)
         {
             Program.Pamiec.Flagi.CF = false;
+        }
+
+        void input(Argument[] args) {
+            if(args.Length != 2)
+            {
+                throw new ArgumentException("nieprawidłowa liczba argumentów");
+            }
+
+            if (args[1].GetType() != typeof(NumericConstant) && args[1].GetType() != typeof(RegisterArgument))
+            {
+                throw new ArgumentException("drugi argument może być tylko liczbą lub rejestrem DX");
+            }
+
+            if (args[1].GetType() == typeof(RegisterArgument) && ((RegisterArgument)args[1]).RegisterName != "DX")
+            {
+                throw new ArgumentException("drugi argument może być tylko rejestrem DX");
+            }
+
+            Console.Write("Podaj liczbę: ");
+            string? input_number = Console.ReadLine();
+
+            if(input_number == null) {
+                input_number = "";
+            }
+            
+            if(!NumericConstant.Contains(input_number))
+            {
+                throw new Exception("podana wartość nie jest prawidłową liczbą");
+            }
+
+            args[0].Set(new NumericConstant(input_number));
+        }
+
+        void output(Argument[] args)
+        {
+            if (args.Length != 2)
+            {
+                throw new ArgumentException("nieprawidłowa liczba argumentów");
+            }
+
+            if (args[1].GetType() != typeof(NumericConstant) && args[1].GetType() != typeof(RegisterArgument) && args[1].GetType() != typeof(HalfRegisterArgument))
+            {
+                throw new ArgumentException("drugi argument może być tylko liczbą lub rejestrem AX lub AL");
+            }
+
+            if (args[1].GetType() == typeof(HalfRegisterArgument) && ((HalfRegisterArgument)args[1]).HalfRegisterName != "AL")
+            {
+                throw new ArgumentException("drugi argument może być tylko rejestrem AX lub AL");
+            }
+            else if (args[1].GetType() == typeof(RegisterArgument) && ((RegisterArgument)args[1]).RegisterName != "AX")
+            {
+                throw new ArgumentException("drugi argument może być tylko rejestrem AX lub AL");
+            }
+
+            Console.WriteLine("Wyjscie: " + args[0].Get());
+            Console.WriteLine("[wcisnij cokolwiek aby kontynuowac]");
+            Console.ReadKey();
         }
     }
 }
