@@ -2,6 +2,7 @@ namespace Projekcior {
     interface Argument
     {
         Int16 Get();
+        UInt16 GetUnsigned();
         bool Get_Bool();
         sbyte Get_Sbyte();
 
@@ -46,6 +47,14 @@ namespace Projekcior {
         public Int16 Get()
         {
             return Register;
+        }
+
+        public UInt16 GetUnsigned()
+        {
+            unchecked
+            {
+                return (UInt16) Register;
+            }
         }
 
         public sbyte Get_Sbyte()
@@ -98,8 +107,8 @@ namespace Projekcior {
                     throw new ArgumentException("podana nazwa nie jest rejestrem");
             }
         }
-
     }
+
     class SegmentArgument : Argument
     {
         private readonly string SegmentName;
@@ -131,6 +140,11 @@ namespace Projekcior {
             {
                 return (Int16)Segment;
             }
+        }
+
+        public UInt16 GetUnsigned()
+        {
+            return Segment;
         }
 
         public sbyte Get_Sbyte()
@@ -193,7 +207,15 @@ namespace Projekcior {
 
         public Int16 Get()
         {
-            return (Int16)Pointer;
+            unchecked
+            {
+                return (Int16)Pointer;
+            }
+        }
+
+        public UInt16 GetUnsigned()
+        {
+            return Pointer;
         }
 
         public sbyte Get_Sbyte()
@@ -208,12 +230,18 @@ namespace Projekcior {
 
         public void Set(Argument other)
         {
-            Pointer = (UInt16)other.Get();
+            unchecked
+            {
+                Pointer = (UInt16)other.Get();
+            }
         }
 
         public void Set(Int16 value)
         {
-            Pointer = (UInt16)value;
+            unchecked
+            {
+                Pointer = (UInt16)value;
+            }
         }
 
 
@@ -233,11 +261,18 @@ namespace Projekcior {
         {
             get
             {
-                return Program.Pamiec.Flagi[FlagName];
+                switch(FlagName)
+                {
+                    case "OF":
+                        return Program.Pamiec.Flagi.
+                }
             }
             set
             {
-                Program.Pamiec.Flagi[FlagName] = value;
+                switch()
+                {
+
+                }
             }
         }
 
@@ -364,7 +399,11 @@ namespace Projekcior {
         public Int16 Get()
         {
             throw new Exception("nie można przenkwertować połówki rejestru na Int16");
-            //return Convert.ToInt16(HalfRegister);
+        }
+
+        public UInt16 GetUnsigned()
+        {
+            throw new Exception("nie można przenkwertować połówki rejestru na Int16");
         }
 
         public sbyte Get_Sbyte()
@@ -408,7 +447,7 @@ namespace Projekcior {
     }
 
     class NumericConstant : Argument {
-        private Int16 value;
+        private readonly Int16 value;
 
         public NumericConstant(string number_string)
         {
@@ -416,21 +455,39 @@ namespace Projekcior {
             {
                 value = 0;
             }
+
+            // jeśli sie zaczyna plusem to usuwamy plusa
+            if(number_string.StartsWith("+"))
+            {
+                number_string = number_string.Substring(1);
+            }
+
+            Int16 sign = 1;
+            if(number_string.StartsWith("-"))
+            {
+                sign = -1;
+                number_string = number_string.Substring(1);
+            }
+
             if(number_string.StartsWith("0x"))
             {
-                value = Convert.ToInt16(number_string.Substring(2), 16);
+                value = (Int16)(sign * Convert.ToInt16(number_string.Substring(2), 16));
             }
             else if (number_string.EndsWith("b"))
             {
-                value = Convert.ToInt16(number_string.Substring(0, number_string.Length - 1), 2);
+                value = (Int16)(sign * Convert.ToInt16(number_string.Substring(0, number_string.Length - 1), 2));
             }
             else if(number_string.StartsWith("0"))
             {
-                value = Convert.ToInt16(number_string, 8);
+                value = (Int16)(sign * Convert.ToInt16(number_string, 8));
+            }
+            else if(number_string.All(char.IsDigit))
+            {
+                value = (Int16)(sign * Convert.ToInt16(number_string, 10));
             }
             else
             {
-                value = Convert.ToInt16(number_string, 10);
+                throw new ArgumentException("to nie jest liczba");
             }
         }
 
@@ -443,6 +500,15 @@ namespace Projekcior {
         {
             return value;
         }
+
+        public UInt16 GetUnsigned()
+        {
+            unchecked
+            {
+                return (UInt16) value;
+            }
+        }
+
         public bool Get_Bool()
         {
             if(value != 0 && value != 1)
@@ -453,7 +519,11 @@ namespace Projekcior {
         }
         public sbyte Get_Sbyte()
         {
-            return Convert.ToSByte(value);
+            unchecked
+            {
+                // to wygląda dziwnie ale po prostu chce żeby 0b11111111 też sie dało tak zapisać
+                return (sbyte)(Convert.ToByte(value));
+            }
         }
 
         public void Set(Argument value)
@@ -469,7 +539,12 @@ namespace Projekcior {
 
         public static bool Contains(string name)
         {
-            return (name == "0" || name.StartsWith("0x") || name.EndsWith("b") || name.StartsWith("0") || name.All(char.IsDigit));
+            string copy = name;
+            if(copy.StartsWith("-") || copy.StartsWith("+"))
+            {
+                copy = copy.Substring(1);
+            }
+            return (copy == "0" || copy.StartsWith("0x") || copy.EndsWith("b") || copy.StartsWith("0") || copy.All(char.IsDigit));
         }
     }
 
@@ -489,6 +564,11 @@ namespace Projekcior {
         public Int16 Get()
         {
             return Convert.ToInt16(Program.Pamiec.PamiecAdresowana[adress]);
+        }
+
+        public UInt16 GetUnsigned()
+        {
+            return Convert.ToUInt16(Program.Pamiec.PamiecAdresowana[adress]);
         }
 
         public UInt16 GetAddress()

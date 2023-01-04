@@ -67,10 +67,55 @@ namespace Projekcior.Commands
             }
             return true;
         }
+
+        bool is_even_parity(Int16 n)
+        {
+            bool parzysty = true;
+            while(n > 0)
+            {
+                if((n | 1) == n)
+                {
+                    parzysty = !parzysty;
+                }
+                n >>= 1;
+            }
+            return parzysty;
+        }
         
         void add(Argument[] args)
         {
-            //...
+            if(args.Length != 2)
+            {
+                throw new Exception("nieprawidłowa liczba argumentów");
+            }
+
+            bool overflow = false;
+            try
+            {
+                Int16 overflow_check = checked((Int16)(args[0].Get() + args[1].Get()));
+            }
+            catch(OverflowException)
+            {
+                overflow = true;
+            }
+
+            bool carry = false;
+            try
+            {
+                UInt16 carry_check = checked((UInt16)(args[0].GetUnsigned() + args[1].GetUnsigned()));
+            }
+            catch(OverflowException)
+            {
+                carry = true;
+            }
+
+
+            Int16 suma = unchecked((Int16)(args[0].Get() + args[1].Get()));
+            Program.Pamiec.Flagi.OF = overflow;
+            Program.Pamiec.Flagi.CF = carry;
+            Program.Pamiec.Flagi.PF = is_even_parity(suma);
+            args[0].Set(suma);
+
         }
 
         void sub(Argument[] args)
@@ -80,7 +125,38 @@ namespace Projekcior.Commands
 
         void adc(Argument[] args)
         {
-            //...
+            if (args.Length != 2)
+            {
+                throw new Exception("nieprawidłowa liczba argumentów");
+            }
+
+            Int16 carry_value = Convert.ToInt16(Program.Pamiec.Flagi.CF);
+            bool overflow = false;
+            try
+            {
+                Int16 overflow_check = checked((Int16)(args[0].Get() + args[1].Get() + carry_value));
+            }
+            catch (OverflowException)
+            {
+                overflow = true;
+            }
+
+            bool carry = false;
+            try
+            {
+                UInt16 carry_check = checked((UInt16)(args[0].GetUnsigned() + args[1].GetUnsigned() + carry_value));
+            }
+            catch (OverflowException)
+            {
+                carry = true;
+            }
+
+
+            Int16 suma = unchecked((Int16)(args[0].Get() + args[1].Get() + carry_value));
+            Program.Pamiec.Flagi.OF = overflow;
+            Program.Pamiec.Flagi.CF = carry;
+            Program.Pamiec.Flagi.PF = is_even_parity(suma);
+            args[0].Set(suma);
         }
 
         void sbb(Argument[] args)
