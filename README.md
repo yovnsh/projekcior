@@ -3,15 +3,15 @@
 #
 
 ## > projekcior.exe
-##### wywołuje okno wyboru trybu w jakim chcemy pracować:
+>wywołuje okno wyboru trybu w jakim chcemy pracować:
 
 ## shell 
 > &nbsp;&nbsp;wszystkie instrukcje assemblera należy wpisywać pojedynczo.\
 > &nbsp;&nbsp;od razu wywołuje obraz pamięci po wykonanej instrukcji.\
 > &nbsp;&nbsp;korzystanie ze skoków nie jest dozwolone.\
-> &nbsp;&nbsp;komenda >exit umożliwia wyjście z programu. można tego dokonać również za pomocą wciśnięcia klawiszy ctrl-c 
+> &nbsp;&nbsp;komenda **exit** umożliwia wyjście z programu. można tego dokonać również za pomocą wciśnięcia klawiszy ctrl-c 
 ## >projekcior.exe --shell
->&nbsp;&nbsp;uruchamia tryb shell z pominięciem okna wyboru.\
+>&nbsp;&nbsp;uruchamia tryb shell z pominięciem okna wyboru.
 ## > file nazwa_pliku [--debug]
 > &nbsp;&nbsp;gdzie nazwa_pliku to ścieżka do programu
 >> &nbsp;&nbsp;wywołuje natychmiastowe uruchomienie programu i ukazanie jego efektu końcowego.\
@@ -19,7 +19,7 @@
 >> 
 > &nbsp;&nbsp;dopisanie --debug ustawi flagę TF powodującą przerwanie po każdej instrukcji.
 >> &nbsp;&nbsp;umożliwia śledzenie krok po kroku wykonywania programu i obserwację zmian zachodzących w pamięci.\
->> &nbsp;&nbsp;w trybie wczytywania z pliku jest możliwe swobodne korzystanie z instrukcji skoków.\
+>> &nbsp;&nbsp;w trybie wczytywania z pliku jest możliwe swobodne korzystanie z instrukcji skoków.
 >> 
  &nbsp;&nbsp; możliwa jest również bezpośrednia zmiana trybu shell i file poprzez argumenty uruchamiania programu.
 > 
@@ -94,7 +94,7 @@
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dodaje '1' do argumentu 1
 
 ##### &nbsp;&nbsp;&nbsp;&nbsp; dec {1}
->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;odejmuje 1 od argumentu 1
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;odejmuje '1' od argumentu 1
 
 ##### &nbsp;&nbsp;&nbsp;&nbsp; aaa
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;poprawia sumę po dodawaniu rozpakowanego BCD
@@ -116,7 +116,7 @@
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mul ze znakiem
 
 ##### &nbsp;&nbsp;&nbsp;&nbsp; div {1}
->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jeśli w argumencie 1 jest coś 8 bitowego - AX jest dzielone przez argument 1, wynik tego działania jest zapisywany w AH, a reszta z dzielenia w AL
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jeśli w argumencie 1 jest coś 8 bitowego - AX jest dzielone przez argument 1, wynik tego działania jest zapisywany w AH, a reszta z dzielenia w AL\
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jeśli w argumencie 1 jest coś 16 bitowego - DX:AX jest dzielone przez argument 1, wynik tego działania jest zapisywany w AX, a reszta z dzielenia w DX
 
 
@@ -125,10 +125,10 @@
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; div ze znakiem
 
 ##### &nbsp;&nbsp;&nbsp;&nbsp; aad
->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; przygotowuje AX przed dzieleniem BCD
 
 ##### &nbsp;&nbsp;&nbsp;&nbsp; aam
->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; przygotowuje AX po mnożeniu BCD
 
 ##### &nbsp;&nbsp;&nbsp;&nbsp; cbw
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; przepisuje znak z AL na AH (jeśli AL jest ujemne, to wypełnia AH jedynkami - w przeciwnym wypadku - zerami)
@@ -272,10 +272,7 @@
 ##### &nbsp;&nbsp;&nbsp;&nbsp; jcxz
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; skok, gdy rejestr CX = 0
 
-
-
 ### 5. przerwań
-
 
 ##### &nbsp;&nbsp;&nbsp;&nbsp; int {1}
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wywołuje przerwanie z kodem określonym w arg 1
@@ -300,4 +297,4 @@
 
 
 
-#### w połownie tworzenia tego dzieła zarezerwowałam sobie miejsce na cmentarzu. 
+w połownie tworzenia tego dzieła zarezerwowałam sobie miejsce na cmentarzu. 
